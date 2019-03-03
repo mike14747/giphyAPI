@@ -1,0 +1,56 @@
+.h_bg {
+    background-image: url("../images/dark_sky_bg.jpg");
+}
+
+.img_row {
+    max-width: 1200px;
+}
+
+.column {
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+  
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+.display_none {
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .column {
+        flex: 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .column {
+        flex: 20%;
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .column {
+        flex: 16.666666%;
+        max-width: 16.666666%;
+    }
+}
+  
+@media (max-width: 599.98px) {
+    .column {
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .extra_text {
+        display: none;
+    }
+}
