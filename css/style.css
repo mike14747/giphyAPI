@@ -2,6 +2,10 @@
     background-image: url("../images/motion_stars.gif");
 }
 
+.max_w {
+    max-width: 250px;
+}
+
 .img_row {
     max-width: 1200px;
 }
@@ -13,7 +17,7 @@
 }
   
 .column img {
-    margin-top: 8px;
+    margin-bottom: 8px;
     vertical-align: middle;
 }
 

@@ -11,6 +11,8 @@ var newGiphyCounter = 0;
 var newGiphy = "";
 var curImgSrc = "";
 var newImgSrc = "";
+var newRatingSpan = "";
+var spanText = "";
 var defaultGiphyArray = ["sun", "moon", "earth", "mars", "jupiter", "rocket", "asteroid", "space shuttle", "comet", "galaxy"];
 
 function clickFunction(giphy) {
@@ -27,7 +29,7 @@ function clickFunction(giphy) {
         // set search_text with number of results
         if (response.data.length > 0) {
             document.getElementById("search_text").classList.remove("text-danger");
-            document.getElementById("search_text").innerHTML = "Showing " + response.data.length + " results for '" + giphy + "'";
+            document.getElementById("search_text").innerHTML = "Showing " + response.data.length + " results for '" + giphy + "'... click on an image to toggle it between a still and animated GIF.";
         } else {
             document.getElementById("search_text").classList.add("text-danger");
             document.getElementById("search_text").innerHTML = "0 results found for: '" + giphy + "'";
@@ -38,6 +40,17 @@ function clickFunction(giphy) {
             if (columnCounter == 7) {
                 columnCounter = 1;
             }
+            newRatingSpan = document.createElement("span");
+            if (response.data[i].rating == "g" || response.data[i].rating == "y") {
+                newRatingSpan.setAttribute("class", "text-success font-weight-bolder");
+            } else if (response.data[i].rating == "pg" || response.data[i].rating == "pg-13") {
+                newRatingSpan.setAttribute("class", "text-warning font-weight-bolder");
+            } else if (response.data[i].rating == "r") {
+                newRatingSpan.setAttribute("class", "text-danger font-weight-bolder");
+            }
+            spanText = document.createTextNode("Rating: " + response.data[i].rating.toUpperCase());
+            newRatingSpan.appendChild(spanText);
+            document.getElementById("column-" + columnCounter).appendChild(newRatingSpan);
             newImg = document.createElement("img");
             var imgId = "img-" + i;
             newImg.setAttribute("id", imgId);
