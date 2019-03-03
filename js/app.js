@@ -11,8 +11,11 @@ var newGiphyCounter = 0;
 var newGiphy = "";
 var curImgSrc = "";
 var newImgSrc = "";
-var newRatingSpan = "";
-var spanText = "";
+var newRatingP = "";
+var pText = "";
+var imgURL = "";
+var downloadBtn = "";
+var downloadText = "";
 var imgId = "";
 var idIndex = 0;
 var curState = "";
@@ -44,8 +47,12 @@ var parsedArray = JSON.parse(localStorage.getItem("addedButtons"));
 if (parsedArray) {
     for (var i = 0; i < parsedArray.length; i++) {
         addGiphyButton(parsedArray[i]);
-        console.log(parsedArray[i]);
     }
+}
+
+function downloadGif(curId) {
+    imgURL = "https://media.giphy.com/media/" + curId + "/giphy.gif";
+    window.open(imgURL);
 }
 
 // make an ajax call based upon the button that was clicked
@@ -74,17 +81,17 @@ function clickFunction(giphy) {
             if (columnCounter == 7) {
                 columnCounter = 1;
             }
-            newRatingSpan = document.createElement("span");
+            newRatingP = document.createElement("p");
             if (response.data[i].rating == "g" || response.data[i].rating == "y") {
-                newRatingSpan.setAttribute("class", "text-success font-weight-bolder");
+                newRatingP.setAttribute("class", "text-success rating_p");
             } else if (response.data[i].rating == "pg" || response.data[i].rating == "pg-13") {
-                newRatingSpan.setAttribute("class", "text-warning font-weight-bolder");
+                newRatingP.setAttribute("class", "text-warning rating_p");
             } else if (response.data[i].rating == "r") {
-                newRatingSpan.setAttribute("class", "text-danger font-weight-bolder");
+                newRatingP.setAttribute("class", "text-danger rating_p");
             }
-            spanText = document.createTextNode("Rating: " + response.data[i].rating.toUpperCase());
-            newRatingSpan.appendChild(spanText);
-            document.getElementById("column-" + columnCounter).appendChild(newRatingSpan);
+            pText = document.createTextNode("Rating: " + response.data[i].rating.toUpperCase());
+            newRatingP.appendChild(pText);
+            document.getElementById("column-" + columnCounter).appendChild(newRatingP);
             newImg = document.createElement("img");
             imgId = "img-" + i;
             newImg.setAttribute("id", imgId);
@@ -93,6 +100,13 @@ function clickFunction(giphy) {
             newImg.setAttribute("src", response.data[i].images.fixed_width_still.url);
             newImg.setAttribute("onclick", "transitionImg(this.id)");
             document.getElementById("column-" + columnCounter).appendChild(newImg);
+            downloadBtn = document.createElement("button");
+            downloadBtn.setAttribute("id", response.data[i].id);
+            downloadBtn.setAttribute("onclick", "downloadGif(this.id)");
+            downloadBtn.setAttribute("class", "btn_download");
+            downloadText = document.createTextNode("Download");
+            downloadBtn.appendChild(downloadText);
+            document.getElementById("column-" + columnCounter).appendChild(downloadBtn);
             columnCounter++;
         }
     });
