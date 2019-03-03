@@ -10,18 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <!-- CDNs for jQuery, Popper.js and Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-    <!-- my javascript -->
-    <script src="js/app.js"></script>
-
     <!-- include my bootstrap companion style sheet -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -31,30 +19,23 @@
 <body>
 
     <div class="container-fluid bg-white">
-
         <div class="row h_bg border">
-
             <div class="col-12 header_bg p-4">
                 <h1 class="text-bolder text-light font-weight-normal text-center">SPACE giphyAPI<span
                         class="small extra_text">... keep it movin'!</span>
                 </h1>
             </div>
-
         </div>
 
-        <div class="row border-bottom mb-4">
-
+        <div class="row border-bottom">
             <div class="col-9">
                 <div class="row">
                     <div id="defaultBtnDiv" class="col pt-4">
                         <p>Default Buttons:</p>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div id="addedBtnDiv" class="col mt-4 py-4">
-
-                    </div>
+                    <div id="addedBtnDiv" class="col mt-4 py-4"></div>
                 </div>
             </div>
 
@@ -67,7 +48,7 @@
                     <button type="submit" class="btn btn-primary"
                         onclick="submitFunction(event)">Submit</button>
                 </form>
-                <div id="removeText" class="display_none border-top mt-4 pt-4">
+                <div id="removeText" class="display_none border-top mt-2 pt-2">
                     <p class="small">Remove added buttons</p>
                     <button type="submit" class="btn btn-sm btn-danger mr-2 mb-2"
                         onclick="removeFunction(1)">Remove All</button>
@@ -75,46 +56,34 @@
                         onclick="removeFunction(2)">Remove Last</button>
                 </div>
             </div>
-
         </div>
 
-        <div class="row flex-wrap img_row mx-auto mb-5">
-
-            <p id="search_text" class="w-100 text-center">
-
-            </p>
-
-            <div id="column-1" class="column">
-
-            </div>
-
-            <div id="column-2" class="column">
-
-            </div>
-
-            <div id="column-3" class="column">
-
-            </div>
-
-            <div id="column-4" class="column">
-
-            </div>
-
-            <div id="column-5" class="column">
-
-            </div>
-
-            <div id="column-6" class="column">
-
-            </div>
-
+        <div class="row flex-wrap img_row mx-auto mt-4 mb-5">
+            <p id="search_text" class="w-100 text-center"></p>
+            <div id="column-1" class="column"></div>
+            <div id="column-2" class="column"></div>
+            <div id="column-3" class="column"></div>
+            <div id="column-4" class="column"></div>
+            <div id="column-5" class="column"></div>
+            <div id="column-6" class="column"></div>
         </div>
 
-        <footer class="w-100 fixed-bottom ">
-            <p class="small text-center py-2 m-0 bg-dark text-light">Copyright &#169; 2019 mike14747</p>
+        <footer class="w-100 fixed-bottom h_bg">
+            <p class="small text-center py-2 m-0 text-light">Copyright &#169; 2019 mike14747</p>
         </footer>
-
     </div>
+
+    <!-- CDNs for jQuery, Popper.js and Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- my javascript -->
+    <script src="js/app.js"></script>
 
 </body>
 
