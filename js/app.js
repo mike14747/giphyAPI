@@ -13,8 +13,12 @@ var curImgSrc = "";
 var newImgSrc = "";
 var newRatingSpan = "";
 var spanText = "";
-var defaultGiphyArray = ["sun", "moon", "earth", "mars", "jupiter", "rocket", "asteroid", "space shuttle", "comet", "galaxy"];
+var imgId = "";
+var idIndex = 0;
+var curState = "";
+var defaultGiphyArray = ["sun", "moon", "earth", "mars", "jupiter", "hubble", "asteroid", "space shuttle", "comet", "galaxy"];
 
+// make an ajax call based upon the button that was clicked
 function clickFunction(giphy) {
     queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=" + apiKey + "&limit=24";
 
@@ -34,7 +38,7 @@ function clickFunction(giphy) {
             document.getElementById("search_text").classList.add("text-danger");
             document.getElementById("search_text").innerHTML = "0 results found for: '" + giphy + "'";
         }
-        // make a counter loop through which column to add the images to
+        // reset counter and loop through which column to add the images to
         columnCounter = 1;
         for (var i = 0; i < response.data.length; i++) {
             if (columnCounter == 7) {
@@ -52,7 +56,7 @@ function clickFunction(giphy) {
             newRatingSpan.appendChild(spanText);
             document.getElementById("column-" + columnCounter).appendChild(newRatingSpan);
             newImg = document.createElement("img");
-            var imgId = "img-" + i;
+            imgId = "img-" + i;
             newImg.setAttribute("id", imgId);
             newImg.setAttribute("class", "w-100");
             newImg.setAttribute("img-type", "still");
@@ -64,6 +68,7 @@ function clickFunction(giphy) {
     });
 }
 
+// add buttons the user inputs, show the Added Buttons text and show the remove buttons
 function submitFunction(event) {
     event.preventDefault();
     newGiphy = document.getElementById("giphyInput").value.trim();
@@ -85,12 +90,13 @@ function submitFunction(event) {
     }
 }
 
+// remove added buttons (last or all)
 function removeFunction(arg) {
     if (arg == 1) {
         document.getElementById("addedBtnDiv").innerHTML = "";
         newGiphyCounter = 0;
     } else if (arg == 2) {
-        var idIndex = newGiphyCounter - 1;
+        idIndex = newGiphyCounter - 1;
         document.getElementById("addedBtn" + idIndex).remove();
         newGiphyCounter--;
     }
@@ -100,9 +106,9 @@ function removeFunction(arg) {
     }
 }
 
+// transition gifs from still to motion and vise-versa
 function transitionImg(cur) {
-    // if the img-type==still, make it img-type=motion and vise-versa
-    var curState = document.getElementById(cur).getAttribute("img-type");
+    curState = document.getElementById(cur).getAttribute("img-type");
     if (curState == "still") {
         document.getElementById(cur).setAttribute("img-type", "motion");
         curImgSrc = document.getElementById(cur).getAttribute("src");
@@ -117,6 +123,7 @@ function transitionImg(cur) {
     }
 }
 
+// dynamically add the default buttons from defaultGiphyArray
 for (var i = 0; i < defaultGiphyArray.length; i++) {
     newBtn = document.createElement("button");
     textNode = document.createTextNode(defaultGiphyArray[i]);
