@@ -17,6 +17,36 @@ var imgId = "";
 var idIndex = 0;
 var curState = "";
 var defaultGiphyArray = ["sun", "moon", "earth", "mars", "jupiter", "hubble", "asteroid", "space shuttle", "comet", "galaxy"];
+var addedGiphyArray = [];
+
+function addGiphyButton(newG) {
+    if (newGiphyCounter == 0) {
+        document.getElementById("addedBtnDiv").innerHTML = "<p>Added Buttons:</p>";
+    }
+    document.getElementById("giphyInput").value = "";
+    document.getElementById("removeText").classList.remove("display_none");
+    newBtn = document.createElement("button");
+    textNode = document.createTextNode(newG);
+    newBtn.appendChild(textNode);
+    newBtn.setAttribute("id", "addedBtn" + newGiphyCounter);
+    newBtn.setAttribute("class", "addedBtn mr-2 mb-2 giphyBtn");
+    newBtn.setAttribute("value", newG);
+    newBtn.setAttribute("onclick", "clickFunction(this.value)");
+    document.getElementById("addedBtnDiv").appendChild(newBtn);
+    addedGiphyArray.push(newG);
+    localStorage.clear();
+    localStorage.setItem("addedButtons", JSON.stringify(addedGiphyArray));
+    newGiphyCounter++;
+}
+
+// load any added giphy button from local storage
+var parsedArray = JSON.parse(localStorage.getItem("addedButtons"));
+if (parsedArray) {
+    for (var i = 0; i < parsedArray.length; i++) {
+        addGiphyButton(parsedArray[i]);
+        console.log(parsedArray[i]);
+    }
+}
 
 // make an ajax call based upon the button that was clicked
 function clickFunction(giphy) {
@@ -72,37 +102,29 @@ function clickFunction(giphy) {
 function submitFunction(event) {
     event.preventDefault();
     newGiphy = document.getElementById("giphyInput").value.trim();
-    if (newGiphyCounter == 0) {
-        document.getElementById("addedBtnDiv").innerHTML = "<p>Added Buttons:</p>";
-    }
     if (newGiphy.length > 0) {
-        document.getElementById("giphyInput").value = "";
-        document.getElementById("removeText").classList.remove("display_none");
-        newBtn = document.createElement("button");
-        textNode = document.createTextNode(newGiphy);
-        newBtn.appendChild(textNode);
-        newBtn.setAttribute("id", "addedBtn" + newGiphyCounter);
-        newBtn.setAttribute("class", "addedBtn mr-2 mb-2 giphyBtn");
-        newBtn.setAttribute("value", newGiphy);
-        newBtn.setAttribute("onclick", "clickFunction(this.value)");
-        document.getElementById("addedBtnDiv").appendChild(newBtn);
-        newGiphyCounter++;
+        addGiphyButton(newGiphy);
     }
 }
 
 // remove added buttons (last or all)
 function removeFunction(arg) {
+    localStorage.clear();
     if (arg == 1) {
         document.getElementById("addedBtnDiv").innerHTML = "";
+        addedGiphyArray = [];
         newGiphyCounter = 0;
     } else if (arg == 2) {
         idIndex = newGiphyCounter - 1;
         document.getElementById("addedBtn" + idIndex).remove();
+        addedGiphyArray.splice(idIndex, 1);
         newGiphyCounter--;
     }
     if (newGiphyCounter == 0) {
         document.getElementById("addedBtnDiv").innerHTML = "";
         document.getElementById("removeText").classList.add("display_none");
+    } else {
+        localStorage.setItem("addedButtons", JSON.stringify(addedGiphyArray));
     }
 }
 
@@ -113,7 +135,6 @@ function transitionImg(cur) {
         document.getElementById(cur).setAttribute("img-type", "motion");
         curImgSrc = document.getElementById(cur).getAttribute("src");
         newImgSrc = curImgSrc.replace("_s", "_d");
-        console.log(newImgSrc);
         document.getElementById(cur).setAttribute("src", newImgSrc);
     } else if (curState == "motion") {
         document.getElementById(cur).setAttribute("img-type", "still");
