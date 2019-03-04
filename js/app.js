@@ -51,7 +51,7 @@ if (parsedArray) {
 }
 
 function downloadGif(curId) {
-    imgURL = "https://media.giphy.com/media/" + curId + "/source.gif";
+    imgURL = "https://media.giphy.com/media/" + curId + "/giphy.gif";
     window.open(imgURL);
 }
 
