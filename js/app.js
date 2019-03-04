@@ -69,6 +69,7 @@ function clickFunction(giphy) {
         }
         // set search_text with number of results
         if (response.data.length > 0) {
+            document.getElementById("instructions").innerHTML = "";
             document.getElementById("search_text").classList.remove("text-danger");
             document.getElementById("search_text").innerHTML = "Showing " + response.data.length + " results for '" + giphy + "'... click on an image to toggle it between a still and animated GIF.";
         } else {
