@@ -6,4 +6,4 @@
 * Click on any of the buttons and up to 24 still GIF images will be retrieved through the giphy.com API.
 * When the GIFs are clicked, they will toggle back and forth from still to motion.
 * The MPAA rating is displayed for each image.
-* Clicking on the download button will take you to the fullsize animated GIF at giphy.com where you can right-click on it and 'Save image as...'
+* Clicking on the download button will take you to the full-size animated GIF at giphy.com where you can right-click on it and 'Save image as...'
