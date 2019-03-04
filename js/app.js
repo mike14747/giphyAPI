@@ -6,12 +6,19 @@ var queryURL = "";
 var newImg = "";
 var newBtn = "";
 var textNode = "";
+var startColCounter = 1;
 var columnCounter = 1;
+var columnId = 1;
+var rowId = 1;
 var newGiphyCounter = 0;
 var newGiphy = "";
 var curImgSrc = "";
 var newImgSrc = "";
+var newImageCounter = 0;
 var newRatingP = "";
+var newResultsP = "";
+var newResultsRow = "";
+var newResultsDiv = "";
 var pText = "";
 var imgURL = "";
 var downloadBtn = "";
@@ -19,6 +26,7 @@ var downloadText = "";
 var imgId = "";
 var idIndex = 0;
 var curState = "";
+var isChecked = false;
 var defaultGiphyArray = ["sun", "moon", "earth", "mars", "jupiter", "hubble", "asteroid", "space shuttle", "comet", "galaxy"];
 var addedGiphyArray = [];
 
@@ -57,58 +65,97 @@ function downloadGif(curId) {
 
 // make an ajax call based upon the button that was clicked
 function clickFunction(giphy) {
-    queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=" + apiKey + "&limit=24";
+    // determine if the checkbox is checked
+    if (document.getElementById("appendToInput").checked) {
+        isChecked = true;
+    } else {
+        isChecked = false;
+        rowId = 1;
+    }
+    queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=" + apiKey + "&limit=12";
 
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        // clear all the images from the 6 image columns
-        for (var c = 1; c <= 6; c++) {
-            document.getElementById("column-" + c).innerHTML = ("");
+        // clear all the images from the 6 image columns if the checkbox is not checked
+        if (!isChecked) {
+            document.getElementById("search_results").innerHTML = "";
+            newImageCounter = 0;
         }
-        // set search_text with number of results
+        document.getElementById("instructions").innerHTML = "";
         if (response.data.length > 0) {
-            document.getElementById("instructions").innerHTML = "";
-            document.getElementById("search_text").classList.remove("text-danger");
-            document.getElementById("search_text").innerHTML = "Showing " + response.data.length + " results for '" + giphy + "'... click on an image to toggle it between a still and animated GIF.";
+            document.getElementById("appendToDiv").classList.remove("display_none");
+            // make the row and columns for the images
+            newResultsRow = document.createElement("div");
+            newResultsRow.setAttribute("class", "row border-bottom flex-wrap img_row mx-auto py-4");
+            newResultsRow.setAttribute("id", "row" + rowId);
+            newResultsDiv = document.createElement("div");
+            newResultsDiv.setAttribute("class", "w-100 text-center mb-2");
+            newResultsP = document.createElement("p");
+            newResultsP.classList.remove("text-danger");
+            newResultsP.innerHTML = "Showing " + response.data.length + " results for '<b>" + giphy + "'</b>... click on an image to toggle it between a still and animated GIF.";
+            newResultsDiv.appendChild(newResultsP);
+            newResultsRow.appendChild(newResultsDiv);
+            document.getElementById("search_results").appendChild(newResultsRow);
+            startColCounter = columnId;
+            for (var c = 1; c <= 6; c++) {
+                newResultsDiv = document.createElement("div");
+                newResultsDiv.setAttribute("class", "column");
+                newResultsDiv.setAttribute("id", "column-" + columnId);
+                newResultsRow.append(newResultsDiv);
+                columnId++;
+            }
+            for (var i = 0; i < response.data.length; i++) {
+                if (columnCounter == startColCounter + 6) {
+                    columnCounter = startColCounter;
+                }
+                // ratings P
+                newRatingP = document.createElement("p");
+                if (response.data[i].rating == "g" || response.data[i].rating == "y") {
+                    newRatingP.setAttribute("class", "text-success rating_p");
+                } else if (response.data[i].rating == "pg" || response.data[i].rating == "pg-13") {
+                    newRatingP.setAttribute("class", "text-warning rating_p");
+                } else if (response.data[i].rating == "r") {
+                    newRatingP.setAttribute("class", "text-danger rating_p");
+                }
+                pText = document.createTextNode("Rating: " + response.data[i].rating.toUpperCase());
+                newRatingP.appendChild(pText);
+                document.getElementById("column-" + columnCounter).appendChild(newRatingP);
+                // image
+                newImg = document.createElement("img");
+                imgId = "img-" + newImageCounter;
+                newImg.setAttribute("id", imgId);
+                newImg.setAttribute("class", "w-100");
+                newImg.setAttribute("img-type", "still");
+                newImg.setAttribute("src", response.data[i].images.fixed_width_still.url);
+                newImg.setAttribute("onclick", "transitionImg(this.id)");
+                document.getElementById("column-" + columnCounter).appendChild(newImg);
+                // download button
+                downloadBtn = document.createElement("button");
+                downloadBtn.setAttribute("id", response.data[i].id);
+                downloadBtn.setAttribute("onclick", "downloadGif(this.id)");
+                downloadBtn.setAttribute("class", "btn_download");
+                downloadText = document.createTextNode("Download");
+                downloadBtn.appendChild(downloadText);
+                document.getElementById("column-" + columnCounter).appendChild(downloadBtn);
+                columnCounter++;
+                newImageCounter++;
+            }
+            rowId++;
         } else {
-            document.getElementById("search_text").classList.add("text-danger");
-            document.getElementById("search_text").innerHTML = "0 results found for: '" + giphy + "'";
-        }
-        // reset counter and loop through which column to add the images to
-        columnCounter = 1;
-        for (var i = 0; i < response.data.length; i++) {
-            if (columnCounter == 7) {
-                columnCounter = 1;
-            }
-            newRatingP = document.createElement("p");
-            if (response.data[i].rating == "g" || response.data[i].rating == "y") {
-                newRatingP.setAttribute("class", "text-success rating_p");
-            } else if (response.data[i].rating == "pg" || response.data[i].rating == "pg-13") {
-                newRatingP.setAttribute("class", "text-warning rating_p");
-            } else if (response.data[i].rating == "r") {
-                newRatingP.setAttribute("class", "text-danger rating_p");
-            }
-            pText = document.createTextNode("Rating: " + response.data[i].rating.toUpperCase());
-            newRatingP.appendChild(pText);
-            document.getElementById("column-" + columnCounter).appendChild(newRatingP);
-            newImg = document.createElement("img");
-            imgId = "img-" + i;
-            newImg.setAttribute("id", imgId);
-            newImg.setAttribute("class", "w-100");
-            newImg.setAttribute("img-type", "still");
-            newImg.setAttribute("src", response.data[i].images.fixed_width_still.url);
-            newImg.setAttribute("onclick", "transitionImg(this.id)");
-            document.getElementById("column-" + columnCounter).appendChild(newImg);
-            downloadBtn = document.createElement("button");
-            downloadBtn.setAttribute("id", response.data[i].id);
-            downloadBtn.setAttribute("onclick", "downloadGif(this.id)");
-            downloadBtn.setAttribute("class", "btn_download");
-            downloadText = document.createTextNode("Download");
-            downloadBtn.appendChild(downloadText);
-            document.getElementById("column-" + columnCounter).appendChild(downloadBtn);
-            columnCounter++;
+            newResultsRow = document.createElement("div");
+            newResultsRow.setAttribute("class", "row border-bottom flex-wrap img_row mx-auto my-4");
+            newResultsRow.setAttribute("id", "rowId");
+            newResultsDiv = document.createElement("div");
+            newResultsDiv.setAttribute("class", "w-100 text-center mb-2");
+            newResultsP = document.createElement("p");
+            newResultsP.setAttribute("class", "text-danger");
+            newResultsP.innerHTML = "0 results found for: '<b>" + giphy + "</b>'";
+            newResultsDiv.appendChild(newResultsP);
+            newResultsRow.appendChild(newResultsDiv);
+            document.getElementById("search_results").appendChild(newResultsRow);
+            rowId++;
         }
     });
 }

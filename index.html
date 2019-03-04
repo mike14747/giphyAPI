@@ -35,7 +35,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div id="addedBtnDiv" class="col py-4"></div>
+                    <div id="addedBtnDiv" class="col pt-4"></div>
+                </div>
+                <div class="row">
+                    <div id="appendToDiv" class="display_none col py-4">
+                        <div class="checkbox">
+                            <label class="checkbox-inline"><input type="checkbox" id="appendToInput"
+                                    value="appendChecked"> Check this to make subsequent button clicks add to the images
+                                below unstead of replacing them with the new search.</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -45,37 +54,33 @@
                         <label for="giphyInput">Add your own giphy button(s)</label>
                         <input id="giphyInput" type="text" class="form-control max_w" maxlength="20">
                     </div>
-                    <button type="submit" class="btn btn-primary"
-                        onclick="submitFunction(event)">Submit</button>
+                    <button type="submit" class="btn btn-primary" onclick="submitFunction(event)">Submit</button>
                 </form>
                 <div id="removeText" class="display_none border-top mt-3 pt-2">
                     <p class="small">Remove added buttons</p>
-                    <button type="submit" class="btn btn-sm btn-danger mr-4 mb-2"
-                        onclick="removeFunction(1)">Remove All</button>
-                        <button type="submit" class="btn btn-sm btn-warning mb-2"
-                        onclick="removeFunction(2)">Remove Last</button>
+                    <button type="submit" class="btn btn-sm btn-danger mr-4 mb-2" onclick="removeFunction(1)">Remove
+                        All</button>
+                    <button type="submit" class="btn btn-sm btn-warning mb-2" onclick="removeFunction(2)">Remove
+                        Last</button>
                 </div>
             </div>
         </div>
 
-        <div class="row flex-wrap img_row mx-auto mt-4 mb-5">
+        <div class="row">
             <div id="instructions" class="mx-auto">
-                <ul class="list-group">
-                    <li class="list-group-item">Click on any of the buttons and up to 24 still GIF images will be retrieved through the giphy.com API.</li>
-                    <li class="list-group-item">When the GIFs are clicked, they will toggle back and forth from still to motion.</li>
+                <ul class="list-group mt-4">
+                    <li class="list-group-item">Click on any of the buttons and up to 12 still GIF images will be
+                        retrieved through the giphy.com API.</li>
+                    <li class="list-group-item">When the GIFs are clicked, they will toggle back and forth from still to
+                        motion.</li>
                     <li class="list-group-item">The MPAA rating is displayed for each image.</li>
-                    <li class="list-group-item">Clicking on the download button will take you to the fullsize animated GIF at giphy.com where you can right-click on it and 'Save image as...'</li>
+                    <li class="list-group-item">Clicking on the download button will take you to the fullsize animated
+                        GIF at giphy.com where you can right-click on it and 'Save image as...'</li>
                 </ul>
-                <p></p>
             </div>
-            <p id="search_text" class="w-100 text-center mb-4"></p>
-            <div id="column-1" class="column"></div>
-            <div id="column-2" class="column"></div>
-            <div id="column-3" class="column"></div>
-            <div id="column-4" class="column"></div>
-            <div id="column-5" class="column"></div>
-            <div id="column-6" class="column"></div>
         </div>
+
+        <div id="search_results" class="mb-5"></div>
 
         <footer class="w-100 fixed-bottom h_bg">
             <p class="small text-center py-2 m-0 text-light">Copyright &#169; 2019 mike14747</p>

@@ -7,7 +7,7 @@
 }
 
 .img_row {
-    max-width: 1200px;
+    max-width: 1248px;
 }
 
 .column {
@@ -50,21 +50,21 @@
     color: #333333;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 632px) {
     .column {
         flex: 25%;
         max-width: 25%;
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 832px) {
     .column {
         flex: 20%;
         max-width: 20%;
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1048px) {
     .column {
         flex: 16.666666%;
         max-width: 16.666666%;
@@ -73,8 +73,8 @@
   
 @media (max-width: 599.98px) {
     .column {
-        flex: 50%;
-        max-width: 50%;
+        flex: 33.333333%;
+        max-width: 33.333333%;
     }
 }
 
