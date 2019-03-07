@@ -52,28 +52,28 @@
     color: #333333;
 }
 
-@media (min-width: 632px) {
+@media (min-width: 671px) {
     .column {
         flex: 25%;
         max-width: 25%;
     }
 }
 
-@media (min-width: 832px) {
+@media (min-width: 878px) {
     .column {
         flex: 20%;
         max-width: 20%;
     }
 }
 
-@media (min-width: 1048px) {
+@media (min-width: 1087px) {
     .column {
         flex: 16.666666%;
         max-width: 16.666666%;
     }
 }
   
-@media (max-width: 599.98px) {
+@media (max-width: 670.98px) {
     .column {
         flex: 33.333333%;
         max-width: 33.333333%;
